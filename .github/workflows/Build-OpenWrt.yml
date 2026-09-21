@@ -31,6 +31,7 @@ jobs:
     env:
       CONF_FILE1: main/${{ inputs.devices }}/${{ inputs.devices }}.config
       CONF_FILE2: main/${{ inputs.devices }}/99-custom
+      CONF_FILE3: main/${{ inputs.devices }}/mt7981b-xiaomi-mi-router-wr30u-ubootmod.dts
     steps:
 #-----------------------------------------------#
     - name: Initialization environment
@@ -81,6 +82,10 @@ jobs:
         if [ -e "${{ env.CONF_FILE2 }}" ]; then
           mkdir -p openwrt/files/etc/uci-defaults
           cp "${{ env.CONF_FILE2 }}" openwrt/files/etc/uci-defaults/
+        fi
+
+        if [ -e "${{ env.CONF_FILE3 }}" ]; then
+          cp -f "${{ env.CONF_FILE3 }}" openwrt/target/linux/mediatek/dts/
         fi
 
         API_URL=https://downloads.openwrt.org/releases/${{ inputs.version }}/targets/${MK_TARGET}/openwrt-${{ inputs.version }}-${MK_TARGET//\//-}.manifest
