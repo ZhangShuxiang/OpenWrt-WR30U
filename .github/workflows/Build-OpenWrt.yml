@@ -6,7 +6,7 @@ on:
       version:
         description: 'Version'
         required: true
-        default: '25.12.5'
+        default: '25.12.6'
         type: choice
         options:
           - '25.12.5'
@@ -31,7 +31,6 @@ jobs:
     env:
       CONF_FILE1: main/${{ inputs.devices }}/${{ inputs.devices }}.config
       CONF_FILE2: main/${{ inputs.devices }}/99-custom
-      CONF_FILE3: main/${{ inputs.devices }}/mt7981b-xiaomi-mi-router-wr30u-ubootmod.dts
     steps:
 #-----------------------------------------------#
     - name: Initialization environment
@@ -84,10 +83,6 @@ jobs:
           cp "${{ env.CONF_FILE2 }}" openwrt/files/etc/uci-defaults/
         fi
 
-        if [ -e "${{ env.CONF_FILE3 }}" ]; then
-          cp -f "${{ env.CONF_FILE3 }}" openwrt/target/linux/mediatek/dts/
-        fi
-
         API_URL=https://downloads.openwrt.org/releases/${{ inputs.version }}/targets/${MK_TARGET}/openwrt-${{ inputs.version }}-${MK_TARGET//\//-}.manifest
         echo "Fetching: $API_URL"
         HASH=$(curl -s "$API_URL" | grep "^kernel - " | sed -n 's/.*~\([a-f0-9]\{32\}\)-r.*/\1/p')
@@ -121,5 +116,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: OpenWrt_${{ inputs.version }}_${{ inputs.devices }}_${{ github.sha }}
+        name: OpenWrt_${{ inputs.version }}_${{ inputs.devices }}
         files: openwrt/bin/targets/${{ env.MK_TARGET }}/*
 #-----------------------------------------------#
