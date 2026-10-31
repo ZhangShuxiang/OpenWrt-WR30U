@@ -10,8 +10,11 @@ uci add_list system.ntp.server='cn.pool.ntp.org'
 uci add_list system.ntp.server='time.windows.com'
 uci commit system
 
-uci set firewall.cfg01e63d.flow_offloading='1'
-uci set firewall.cfg01e63d.flow_offloading_hw='1'
+uci del firewall.cfg01e63d.syn_flood
+uci del firewall.cfg03dc81.masq
+uci set firewall.cfg01e63d.synflood_protect='1'
+uci set firewall.cfg03dc81.input='ACCEPT'
+uci set firewall.cfg03dc81.forward='ACCEPT'
 uci commit firewall
 
 uci set attendedsysupgrade.client.login_check_for_upgrades='0'
