@@ -2,6 +2,7 @@
 # MAC=$(cat /sys/class/net/br-lan/address | sed 's/://g') && (echo "$MAC"; sleep 1; echo "$MAC") | passwd > /dev/null 2>&1
 sed -i -E '/rtp2httpd|taskplan|nikki|origin/d' /etc/apk/repositories.d/distfeeds.list
 sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list
+sed -i '$a\__KMODS_ADB_URL__' /etc/apk/repositories.d/distfeeds.list
 
 sed -i "s/^\(\s*option\s\+iptables\s\+\)['\"]1['\"]/\1'0'/" /etc/config/dockerd
 
