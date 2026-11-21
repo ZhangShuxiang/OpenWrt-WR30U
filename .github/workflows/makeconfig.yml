@@ -104,7 +104,7 @@ jobs:
         cd openwrt
         make defconfig
         mkdir -p configfile
-        cp "${{ env.CONF_FILE2 }}" configfile/
+        cp "../${{ env.CONF_FILE2 }}" configfile/
         cp .config configfile/test.config
 #-----------------------------------------------#
     - name: Upload firmware directory
