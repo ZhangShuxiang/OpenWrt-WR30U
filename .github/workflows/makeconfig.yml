@@ -29,7 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     env:
-      CONF_FILE1: main/${{ inputs.devices }}/${{ inputs.devices }}.config
+      CONF_FILE1: main/${{ inputs.devices }}/test.config
       CONF_FILE2: main/${{ inputs.devices }}/99-custom
     steps:
 #-----------------------------------------------#
@@ -95,7 +95,7 @@ jobs:
 
         if [ -e "${{ env.CONF_FILE2 }}" ]; then
           mkdir -p openwrt/files/etc/uci-defaults
-          sed -i "4a\\sed -i '\$a\\${KMODS_ADB_URL}' /etc/apk/repositories.d/distfeeds.list" "${{ env.CONF_FILE2 }}"
+          sed -i "4a\\sed -i '\$a\\\${KMODS_ADB_URL}' /etc/apk/repositories.d/distfeeds.list" "${{ env.CONF_FILE2 }}"
           cp "${{ env.CONF_FILE2 }}" openwrt/files/etc/uci-defaults/
         fi
 #-----------------------------------------------#
