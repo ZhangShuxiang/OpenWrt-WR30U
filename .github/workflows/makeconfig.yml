@@ -95,7 +95,7 @@ jobs:
 
         if [ -e "${{ env.CONF_FILE2 }}" ]; then
           mkdir -p openwrt/files/etc/uci-defaults
-          sed -i "4a\\sed -i '\$a\\\${KMODS_ADB_URL}' /etc/apk/repositories.d/distfeeds.list" "${{ env.CONF_FILE2 }}"
+          sed -i "s|__KMODS_ADB_URL__|${KMODS_ADB_URL}|g" "${{ env.CONF_FILE2 }}"
           cp "${{ env.CONF_FILE2 }}" openwrt/files/etc/uci-defaults/
         fi
 #-----------------------------------------------#
